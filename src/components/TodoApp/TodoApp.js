@@ -1,75 +1,85 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import "./TodoApp.css";
 
-class TodoApp extends Component {
-  state = {
-    input: "",
-    items: [],
-  };
+function TodoApp() {
+  const [todos, setTodos] = useState([]);
+  const [text, setText] = useState("");
+  const weekday = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ];
+  let day = weekday[new Date().getDay()];
+  console.log(todos);
 
-  handleChange = (event) => {
-    this.setState({
-      input: event.target.value,
-    });
-  };
-
-  storeItems = (event) => {
+  const addTodo = (event) => {
     event.preventDefault();
-    const { input } = this.state;
-
-    this.setState({
-      items: [...this.state.items, input],
-      input: "",
-    });
+    if (!text || /^\s*$/.test(text)) {
+      return;
+    }
+    setTodos([...todos, { id: Date.now(), text, status: false }]);
+    setText("");
   };
 
-  deleteItem = (key) => {
-    // const allItems = [...this.state.items];
-    // allItems.splice(index, 1); // Here splice takes 2 parameters (index of item, no:items want to pull by the index)
-
-    // this.setState({
-    //   items: allItems,
-    // });
-
-    // OR
-
-    this.setState({
-      items: this.state.items.filter((data, index) => index !== key), // Advanced way for deleteting values
-    });
-  };
-
-  render() {
-    const { input, items } = this.state;
-    console.log(items);
-
-    return (
-      <div className="todo-container">
-        <form className="input-section" onSubmit={this.storeItems}>
-          <h1>TodoApp</h1>
+  return (
+    <div className="app">
+      <div className="mainHeading">
+        <h1>ToDo List</h1>
+      </div>
+      <div className="subHeading">
+        <br />
+        <h2>Whoop, it's {day} 🌝 ☕ </h2>
+      </div>
+      <div className="input">
+        <form onSubmit={addTodo}>
           <input
+            value={text}
+            onChange={(event) => setText(event.target.value)}
             type="text"
-            onChange={this.handleChange}
-            value={input}
-            placeholder="Enter items.."
+            placeholder="🖊️ Add item..."
           />
         </form>
-
-        <ul>
-          {items.map((data, index) => (
-            <li key={index}>
-              {data}
-              <div>
-                <i
-                  className="fa-solid fa-trash-can"
-                  onClick={() => this.deleteItem(index)}
-                ></i>
-              </div>
-            </li>
-          ))}
-        </ul>
+        <i onClick={addTodo} className="fas fa-plus"></i>
       </div>
-    );
-  }
+      {todos.map((data) => (
+        <div className="todos">
+          <div className="todo">
+            <div className="left">
+              <input
+                onChange={(event) =>
+                  setTodos(
+                    todos.filter((data3) => {
+                      if (data3.id === data.id) {
+                        data3.status = event.target.checked;
+                      }
+                      return data3;
+                    })
+                  )
+                }
+                type="checkbox"
+                name=""
+                id=""
+              />
+              <p>{data.text}</p>
+            </div>
+            <div className="right">
+            <i className="fa-regular fa-pen-to-square" style={{marginRight:'7px'}}></i>
+              <i
+                onClick={() =>
+                  setTodos(todos.filter((data2) => data2.id !== data.id))
+                }
+                className="fas fa-times"
+              ></i>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
 }
 
 export default TodoApp;

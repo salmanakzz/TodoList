@@ -8,10 +8,9 @@ body {
 }
 
 .app {
-  position: absolute;
-  top: 10%;
-  left: 50%;
-  transform: translate(-50%, -10%);
+  text-align: center;
+  margin: auto;
+  margin-top: 50px;
 }
 
 .app .mainHeading h1 {
@@ -39,6 +38,53 @@ h2 {
   align-items: center;
   border-radius: 6px;
   padding: 5px;
+  position: sticky;
+  transform: translate(-50%, -10%);
+  left: 50%;
+}
+
+.todo-input-edit {
+  margin-top: 0.8em;
+  width: 23.6em;
+  height: 2em;
+  background-color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 6px;
+  padding: 5px;
+  border-color: transparent;
+  outline-color: transparent;
+  position: sticky;
+  transform: translate(-50%, -10%);
+  left: 50%;
+}
+
+.todo-button {
+  font-size: 10px;
+  height: 39px;
+  width: 62px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  outline: none;
+  background: linear-gradient(
+    90deg,
+    rgba(93, 12, 255, 1) 0%,
+    rgba(155, 0, 250, 1) 100%
+  );
+  color: #fff;
+  text-transform: capitalize;
+  margin-top: 7px;
+}
+
+.todo-button.edit {
+  background: linear-gradient(
+    90deg,
+    rgba(20, 159, 255, 1) 0%,
+    rgba(17, 122, 255, 1) 100%
+  );
+  margin-right: 16.8rem;
 }
 
 .app .input input {
@@ -85,4 +131,3 @@ h2 {
   font-style: normal;
   color: grey;
 }
-
